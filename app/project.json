@@ -63,6 +63,20 @@
     "graph_errors": "关系错误",
     "weight_errors": "重量差异",
     "child": "子单号",
-    "classes": "危险类组合"
+    "classes": "危险类组合",
+    "zone": "隔离区",
+    "category": "采用类别",
+    "observed": "见险类",
+    "sources": "来源",
+    "boxes": "箱号清单",
+    "legs": "证据段",
+    "findings": "发现项",
+    "decision": "裁决",
+    "held": "扣留箱",
+    "released": "放行箱",
+    "unclosed": "未闭合箱",
+    "handover": "交接",
+    "seal": "凭证印",
+    "status": "状态"
   }
 }

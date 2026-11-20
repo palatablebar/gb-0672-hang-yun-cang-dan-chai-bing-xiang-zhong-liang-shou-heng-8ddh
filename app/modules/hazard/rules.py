@@ -1,5 +1,6 @@
 from collections import defaultdict
 import re
+from app.modules.hazard.voucher import build_voucher
 
 def inspect(rows,context):
     issues=[];containers=defaultdict(set)
@@ -17,4 +18,5 @@ def inspect(rows,context):
 
 def apply(state):
     state['hazard_issues']=inspect(state['records'],state['context'])
-    state['views']['hazard']={'title':'危险品核验','rows':state['hazard_issues'],'metrics':{'危险类':len({r['hazard'] for r in state['records'] if r['hazard']!='none'}),'阻断项':len(state['hazard_issues'])}}
+    state['voucher']=build_voucher(state)
+    state['views']['hazard']={'title':'危险品核验','rows':state['hazard_issues'],'metrics':{'危险类':len({r['hazard'] for r in state['records'] if r['hazard']!='none'}),'阻断项':len(state['hazard_issues']),'扣留箱':len(state['voucher']['held']),'裁决':state['voucher']['decision']}}

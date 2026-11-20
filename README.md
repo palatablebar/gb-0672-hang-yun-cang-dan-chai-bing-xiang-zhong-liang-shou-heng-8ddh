@@ -13,7 +13,7 @@ docker compose exec -T app pytest -q
 
 各模块页面对应 `/<模块英文名>`，各模块执行入口为 `POST /api/<模块英文名>`，不传参即可独立演示。完整运行 `POST /api/runs` 支持 `dataset`（dirty/clean/legacy）、`csv_text` 与 `overrides` 参数。批次历史 `GET /api/runs`，详情 `GET /api/runs/{run_id}`。
 
-同输入与规则版本生成相同批号，只保留一条批次。复核入口 `POST /api/runs/{run_id}/review` 提交当前 `revision`，陈旧提交409。归档包只有一个下载入口 `GET /api/export/{run_id}`，含证据和运行摘要。原始隔离在页面同屏显示。
+同输入与规则版本生成相同批号，只保留一条批次。复核入口 `POST /api/runs/{run_id}/review` 提交当前 `revision`，陈旧提交409。危险品页形成隔离区配载放行凭证：逐箱写明采用类别、来源与件重，每箱恰入一区；只有类别闭合、逐层件重守恒、封箱证据完整才可交接。裁决按剩余箱能否共同证明隔离结论分为整区放行、部分扣留、整区冻结。凭证确认 `POST /api/runs/{run_id}/voucher/confirm` 同样按 `revision` 乐观控制，确认失败保留旧版凭证与原舱单证据，重跑同一批不新增第二套。归档包只有一个下载入口 `GET /api/export/{run_id}`，含证据、凭证和运行摘要。原始隔离在页面同屏显示。
 
 SQLite使用命名卷，容器重启后保留历史。要重建演示可在Compose中改用新的卷名称，保留旧卷。
 

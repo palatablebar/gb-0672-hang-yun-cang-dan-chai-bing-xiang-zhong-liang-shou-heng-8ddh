@@ -9,7 +9,7 @@
 | M1 舱单采信 | 执行并复核舱单采信 | `POST /api/intake` | `app/modules/intake/rules.py` | `tests/test_intake.py` |
 | M2 包装映射 | 执行并复核包装映射 | `POST /api/packaging` | `app/modules/packaging/rules.py` | `tests/test_packaging.py` |
 | M3 拆并编组 | 执行并复核拆并编组 | `POST /api/grouping` | `app/modules/grouping/rules.py` | `tests/test_grouping.py` |
-| M4 危险品检查 | 执行并复核危险品检查 | `POST /api/hazard` | `app/modules/hazard/rules.py` | `tests/test_hazard.py` |
+| M4 危险品检查 | 执行并复核危险品检查 | `POST /api/hazard` | `app/modules/hazard/rules.py`、`app/modules/hazard/voucher.py` | `tests/test_hazard.py`、`tests/test_voucher.py` |
 | M5 净毛重核验 | 执行并复核净毛重核验 | `POST /api/weight` | `app/modules/weight/rules.py` | `tests/test_weight.py` |
 | M6 报关对账 | 执行并复核报关对账 | `POST /api/reconcile` | `app/modules/reconcile/rules.py` | `tests/test_reconcile.py` |
 | M7 版本封存 | 执行并复核版本封存 | `POST /api/archive` | `app/modules/archive/rules.py` | `tests/test_archive.py` |
@@ -29,6 +29,9 @@
 | TRAP-06 | 全角千分位 | 静默错算或证据丢失 | 以可复核规则显式处理 | `app/modules/packaging/rules.py` | `tests/test_packaging.py::test_fullwidth_decimal` |
 | TRAP-20 | 拆并依赖环 | 静默错算或证据丢失 | 以可复核规则显式处理 | `app/modules/grouping/rules.py` | `tests/test_grouping.py::test_cycle_real` |
 | TRAP-21 | 缺失父级 | 静默错算或证据丢失 | 以可复核规则显式处理 | `app/modules/grouping/rules.py` | `tests/test_grouping.py::test_missing_parent_real` |
+| TRAP-22 | 混类箱重复入区 | 同一箱计入相邻两区重复配载 | 每箱恰入一区，混类与未知类入扣留区 | `app/modules/hazard/voucher.py` | `tests/test_voucher.py::test_box_counted_once` |
+| TRAP-23 | 未闭合箱拖累全批 | 整区扣留错过船期或整区放行混装不相容 | 按剩余箱能否共同证明隔离结论裁决部分扣留或整区冻结 | `app/modules/hazard/voucher.py` | `tests/test_voucher.py::test_freeze_when_closed_box_incompatible` |
+| TRAP-24 | 凭证确认竞争 | 失败覆盖旧版或重跑新增第二套 | 乐观版本控制，失败保留旧版与原舱单证据，凭证按run_id唯一 | `app/store.py` | `tests/test_voucher.py::test_voucher_confirm_failure_restores_old` |
 
 ## 对账规则
 
